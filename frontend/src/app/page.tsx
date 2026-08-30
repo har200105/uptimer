@@ -2,15 +2,32 @@
 
 import Button from "@/components/Button";
 import TextInput from "@/components/TextInput";
+import PageLoader from "@/components/PageLoader";
 import Link from "next/link";
-import { FC, Fragment, ReactElement, useState } from "react";
+import { FC, Fragment, ReactElement, useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaTv } from "react-icons/fa";
 import clsx from "clsx";
 import { useLogin } from "@/app/(auth)/login/useLogin";
+import { useQuery } from "@apollo/client";
+import { useRouter } from "next/navigation";
+import { CHECK_CURRENT_USER } from "@/queries/auth";
 
 const Home: FC = (): ReactElement => {
+  const router = useRouter();
+  const { loading: checkingAuth, data } = useQuery(CHECK_CURRENT_USER, { fetchPolicy: 'network-only' });
+  const isAuthenticated: boolean = !!data?.checkCurrentUser?.user;
   const [passwordType, setPasswordType] = useState<string>('password');
   const { loading, validationErrors, setValidationErrors, onLoginSubmit } = useLogin();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/status');
+    }
+  }, [isAuthenticated, router]);
+
+  if (checkingAuth || isAuthenticated) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="w-screen min-h-screen flex items-center justify-center bg-white">
