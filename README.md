@@ -12,6 +12,12 @@ A full-stack, self-hosted alternative to services like UptimeRobot or Better Upt
 - **Auth** — cookie/JWT-based session auth gates the dashboard (login / create-account), while the status page stays public.
 - **Live updates** — a GraphQL subscription (over WebSockets) pushes heartbeat updates to the dashboard in real time instead of requiring polling.
 
+## Screenshots
+
+| Uptime tests | Test details | HTTP monitor config | Contact groups |
+| --- | --- | --- | --- |
+| ![Uptime tests list](screenshots/uptime-tests.png) | ![Test details with response chart](screenshots/test-details.png) | ![Edit HTTP monitor form](screenshots/http-monitor.png) | ![Contact group with Slack channel](screenshots/contact-group.png) |
+
 ## Tech Stack
 
 **Backend** — Node.js, Express, Apollo Server (GraphQL + subscriptions), Sequelize/Postgres, MongoDB, Redis, TypeScript
